@@ -6,7 +6,7 @@ This code book summarizes the resulting data fields in tidy.txt.
 # Raw Data Collection
 Based on [UCI Machine Learning Repositories](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.names), the data was collected during experiments carried out with a group of 30 volunteers within an age bracket of 19-48 years old. Each volunteer performed six activities ( WALKING, WALKING\_UPSTAIRS, WALKING\_DOWNSTAIRS, SITTING, STANDING, LAYING ) while wearing a smartphone (Samsung Galaxy S  II ) on the waist. Embedded accelerometer and gyroscope was used to capture the 3-axial (x,y,z) linear acceleration and 3-axial (x,y,z) angular velocity at a constant rate of 50 Hz. The experiments were video recorded in order to label the data manually. The dataset generated is randomized into two datasets with 70% of the volunteers selected for generating the training dataset and 30% selected for test datasets.
 
-The sensor signalsfrom accelerometer and gyroscope were pre-processed using noise filters application and then sampled in fixed-width sliding windows of 2.56 seconds and 50% overlap( 128 readings/window). 
+The sensor signals from accelerometer and gyroscope were pre-processed using noise filters application and then sampled in fixed-width sliding windows of 2.56 seconds and 50% overlap( 128 readings/window). 
 
 # Dataset  Description
 ## Files Utilised In This Project
@@ -136,125 +136,15 @@ colnames( mergedActivities ) <- 'Activity'
 allData <- cbind( mergedFeatures, mergedActivities, mergedSubjects )
 ```
 
-```{r, eval=FALSE}
-str(allData)
-```
-
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
-library(data.table)
-fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-download.file(fileUrl, destfile = "dataset.zip")
-unzip("dataset.zip")
-featureLabels <- read.table("UCI HAR Dataset/features.txt")
-activityLabels <- read.table("UCI HAR Dataset/activity_labels.txt", header = FALSE)
-trainingFeatures <- read.table("UCI HAR Dataset/train/X_train.txt",header=FALSE)
-trainingActivity <- read.table("UCI HAR Dataset/train/y_train.txt",header=FALSE)
-trainingSubject <- read.table("UCI HAR Dataset/train/subject_train.txt",header=FALSE)
-testFeatures <- read.table("UCI HAR Dataset/test/X_test.txt",header=FALSE)
-testActivity <- read.table("UCI HAR Dataset/test/y_test.txt",header=FALSE)
-testSubject <- read.table("UCI HAR Dataset/test/subject_test.txt",header=FALSE)
-mergedFeatures <- rbind( trainingFeatures, testFeatures )
-mergedSubjects <- rbind(trainingSubject, testSubject )
-mergedActivities <- rbind( trainingActivity, testActivity )
-colnames( mergedFeatures ) <- featureLabels$V2
-colnames( mergedSubjects ) <- 'Subject'
-colnames( mergedActivities ) <- 'Activity'
-allData <- cbind( mergedFeatures, mergedActivities, mergedSubjects )
-str(allData)
-```
-
 ## PART II: Extracts only the measurements on the mean and standard deviation for each measurement
 ### Extract fields containing mean() and std() (along with the columns: 'Subject' and 'Activity')
 ```{r, eval=FALSE}
 extractedData <- allData[,grepl("mean\\(\\)|std\\(\\)|Subject|Activity", names(allData))]
 ```
 
-```{r, eval=FALSE}
-str(extractedData)
-```
-
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
-library(data.table)
-fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-download.file(fileUrl, destfile = "dataset.zip")
-unzip("dataset.zip")
-featureLabels <- read.table("UCI HAR Dataset/features.txt")
-activityLabels <- read.table("UCI HAR Dataset/activity_labels.txt", header = FALSE)
-trainingFeatures <- read.table("UCI HAR Dataset/train/X_train.txt",header=FALSE)
-trainingActivity <- read.table("UCI HAR Dataset/train/y_train.txt",header=FALSE)
-trainingSubject <- read.table("UCI HAR Dataset/train/subject_train.txt",header=FALSE)
-testFeatures <- read.table("UCI HAR Dataset/test/X_test.txt",header=FALSE)
-testActivity <- read.table("UCI HAR Dataset/test/y_test.txt",header=FALSE)
-testSubject <- read.table("UCI HAR Dataset/test/subject_test.txt",header=FALSE)
-mergedFeatures <- rbind( trainingFeatures, testFeatures )
-mergedSubjects <- rbind(trainingSubject, testSubject )
-mergedActivities <- rbind( trainingActivity, testActivity )
-colnames( mergedFeatures ) <- featureLabels$V2
-colnames( mergedSubjects ) <- 'Subject'
-colnames( mergedActivities ) <- 'Activity'
-allData <- cbind( mergedFeatures, mergedActivities, mergedSubjects )
-extractedData <- allData[,grepl("mean\\(\\)|std\\(\\)|Subject|Activity", names(allData))]
-str(extractedData)
-```
-
 ## PART III: Uses descriptive activity names to name the activities in the data set
 ```{r, eval=FALSE}
 extractedData$Activity <- factor(extractedData$Activity,levels=activityLabels$V1,labels=activityLabels$V2)
-```
-
-```{r, eval=FALSE}
-table(extractedData$Activity)
-```
-
-Before:
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
-library(data.table)
-fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-download.file(fileUrl, destfile = "dataset.zip")
-unzip("dataset.zip")
-featureLabels <- read.table("UCI HAR Dataset/features.txt")
-activityLabels <- read.table("UCI HAR Dataset/activity_labels.txt", header = FALSE)
-trainingFeatures <- read.table("UCI HAR Dataset/train/X_train.txt",header=FALSE)
-trainingActivity <- read.table("UCI HAR Dataset/train/y_train.txt",header=FALSE)
-trainingSubject <- read.table("UCI HAR Dataset/train/subject_train.txt",header=FALSE)
-testFeatures <- read.table("UCI HAR Dataset/test/X_test.txt",header=FALSE)
-testActivity <- read.table("UCI HAR Dataset/test/y_test.txt",header=FALSE)
-testSubject <- read.table("UCI HAR Dataset/test/subject_test.txt",header=FALSE)
-mergedFeatures <- rbind( trainingFeatures, testFeatures )
-mergedSubjects <- rbind(trainingSubject, testSubject )
-mergedActivities <- rbind( trainingActivity, testActivity )
-colnames( mergedFeatures ) <- featureLabels$V2
-colnames( mergedSubjects ) <- 'Subject'
-colnames( mergedActivities ) <- 'Activity'
-allData <- cbind( mergedFeatures, mergedActivities, mergedSubjects )
-extractedData <- allData[,grepl("mean\\(\\)|std\\(\\)|Subject|Activity", names(allData))]
-table(extractedData$Activity)
-```
-
-After:
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
-library(data.table)
-fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-download.file(fileUrl, destfile = "dataset.zip")
-unzip("dataset.zip")
-featureLabels <- read.table("UCI HAR Dataset/features.txt")
-activityLabels <- read.table("UCI HAR Dataset/activity_labels.txt", header = FALSE)
-trainingFeatures <- read.table("UCI HAR Dataset/train/X_train.txt",header=FALSE)
-trainingActivity <- read.table("UCI HAR Dataset/train/y_train.txt",header=FALSE)
-trainingSubject <- read.table("UCI HAR Dataset/train/subject_train.txt",header=FALSE)
-testFeatures <- read.table("UCI HAR Dataset/test/X_test.txt",header=FALSE)
-testActivity <- read.table("UCI HAR Dataset/test/y_test.txt",header=FALSE)
-testSubject <- read.table("UCI HAR Dataset/test/subject_test.txt",header=FALSE)
-mergedFeatures <- rbind( trainingFeatures, testFeatures )
-mergedSubjects <- rbind(trainingSubject, testSubject )
-mergedActivities <- rbind( trainingActivity, testActivity )
-colnames( mergedFeatures ) <- featureLabels$V2
-colnames( mergedSubjects ) <- 'Subject'
-colnames( mergedActivities ) <- 'Activity'
-allData <- cbind( mergedFeatures, mergedActivities, mergedSubjects )
-extractedData <- allData[,grepl("mean\\(\\)|std\\(\\)|Subject|Activity", names(allData))]
-extractedData$Activity <- factor(extractedData$Activity,levels=activityLabels$V1,labels=activityLabels$V2)
-table(extractedData$Activity)
 ```
 
 ## PART IV: Appropriately labels the data set with descriptive names
@@ -279,42 +169,6 @@ names(extractedData)<-gsub("std\\(\\)", "StdDev", names(extractedData))
 names(extractedData)<-gsub("mean\\(\\)", "Mean", names(extractedData))
 ``` 
  
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
-library(data.table)
-library(knitr)
-fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-download.file(fileUrl, destfile = "dataset.zip")
-unzip("dataset.zip")
-featureLabels <- read.table("UCI HAR Dataset/features.txt")
-activityLabels <- read.table("UCI HAR Dataset/activity_labels.txt", header = FALSE)
-trainingFeatures <- read.table("UCI HAR Dataset/train/X_train.txt",header=FALSE)
-trainingActivity <- read.table("UCI HAR Dataset/train/y_train.txt",header=FALSE)
-trainingSubject <- read.table("UCI HAR Dataset/train/subject_train.txt",header=FALSE)
-testFeatures <- read.table("UCI HAR Dataset/test/X_test.txt",header=FALSE)
-testActivity <- read.table("UCI HAR Dataset/test/y_test.txt",header=FALSE)
-testSubject <- read.table("UCI HAR Dataset/test/subject_test.txt",header=FALSE)
-mergedFeatures <- rbind( trainingFeatures, testFeatures )
-mergedSubjects <- rbind(trainingSubject, testSubject )
-mergedActivities <- rbind( trainingActivity, testActivity )
-colnames( mergedFeatures ) <- featureLabels$V2
-colnames( mergedSubjects ) <- 'Subject'
-colnames( mergedActivities ) <- 'Activity'
-allData <- cbind( mergedFeatures, mergedActivities, mergedSubjects )
-extractedData <- allData[,grepl("mean\\(\\)|std\\(\\)|Subject|Activity", names(allData))]
-extractedData$Activity <- factor(extractedData$Activity,levels=activityLabels$V1,labels=activityLabels$V2)
-Before <- names(extractedData)
-names(extractedData)<-gsub("^t", "time", names(extractedData))
-names(extractedData)<-gsub("^f", "frequency", names(extractedData))
-names(extractedData)<-gsub("Acc", "Accelerometer", names(extractedData))
-names(extractedData)<-gsub("Gyro", "Gyroscope", names(extractedData))
-names(extractedData)<-gsub("Mag", "Magnitude", names(extractedData))
-names(extractedData)<-gsub("BodyBody", "Body", names(extractedData))
-names(extractedData)<-gsub("std\\(\\)", "StdDev", names(extractedData))
-names(extractedData)<-gsub("mean\\(\\)", "Mean", names(extractedData))
-After <- names(extractedData)
-kable(cbind(Before, After), format = "markdown")
-``` 
- 
 ## PART V: Creates a second, independent tidy data set with the average of each variable for each activity and each subject
 ```{r, eval=FALSE}
 finalData <- aggregate(. ~Subject + Activity, extractedData, mean)
@@ -322,42 +176,5 @@ finalData <- finalData[order(finalData$Subject,finalData$Activity),]
 write.table(finalData, file = "tidydata.txt",row.name=FALSE)
 ``` 
 
-```{r, eval=FALSE}
-dim(finalData)
-``` 
-
-```{r, warning=FALSE, echo=FALSE, message=FALSE}
-library(data.table)
-fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
-download.file(fileUrl, destfile = "dataset.zip")
-unzip("dataset.zip")
-featureLabels <- read.table("UCI HAR Dataset/features.txt")
-activityLabels <- read.table("UCI HAR Dataset/activity_labels.txt", header = FALSE)
-trainingFeatures <- read.table("UCI HAR Dataset/train/X_train.txt",header=FALSE)
-trainingActivity <- read.table("UCI HAR Dataset/train/y_train.txt",header=FALSE)
-trainingSubject <- read.table("UCI HAR Dataset/train/subject_train.txt",header=FALSE)
-testFeatures <- read.table("UCI HAR Dataset/test/X_test.txt",header=FALSE)
-testActivity <- read.table("UCI HAR Dataset/test/y_test.txt",header=FALSE)
-testSubject <- read.table("UCI HAR Dataset/test/subject_test.txt",header=FALSE)
-mergedFeatures <- rbind( trainingFeatures, testFeatures )
-mergedSubjects <- rbind(trainingSubject, testSubject )
-mergedActivities <- rbind( trainingActivity, testActivity )
-colnames( mergedFeatures ) <- featureLabels$V2
-colnames( mergedSubjects ) <- 'Subject'
-colnames( mergedActivities ) <- 'Activity'
-allData <- cbind( mergedFeatures, mergedActivities, mergedSubjects )
-extractedData <- allData[,grepl("mean\\(\\)|std\\(\\)|Subject|Activity", names(allData))]
-extractedData$Activity <- factor(extractedData$Activity,levels=activityLabels$V1,labels=activityLabels$V2)
-names(extractedData)<-gsub("^t", "time", names(extractedData))
-names(extractedData)<-gsub("^f", "frequency", names(extractedData))
-names(extractedData)<-gsub("Acc", "Accelerometer", names(extractedData))
-names(extractedData)<-gsub("Gyro", "Gyroscope", names(extractedData))
-names(extractedData)<-gsub("Mag", "Magnitude", names(extractedData))
-names(extractedData)<-gsub("BodyBody", "Body", names(extractedData))
-names(extractedData)<-gsub("std\\(\\)", "StdDev", names(extractedData))
-names(extractedData)<-gsub("mean\\(\\)", "Mean", names(extractedData))
-finalData <- aggregate(. ~Subject + Activity, extractedData, mean)
-finalData <- finalData[order(finalData$Subject,finalData$Activity),]
-dim(finalData)
-``` 
- 
+### Summary
+The initial merged data of both training and test datasets contain 10299 observations and 563 variables. After retaining only those variables containing mean() and std(), the number of variables narrow down to 68 variables. After averaging each variable for each activity and each subject, the number of observations narrow down to 180 observations. 
