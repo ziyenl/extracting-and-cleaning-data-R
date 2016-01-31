@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<!-- saved from url=(0014)about:internet -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=9" >
+
+<title>Code Book</title>
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 12px;
+   margin: 8px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre {	
+   margin-top: 0;
+   max-width: 95%;
+   border: 1px solid #ccc;
+   white-space: pre-wrap;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code.r, code.cpp {
+   background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+
+</style>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: rgb(88, 72, 246)
+   }
+
+   pre .number {
+     color: rgb(0, 0, 205);
+   }
+
+   pre .comment {
+     color: rgb(76, 136, 107);
+   }
+
+   pre .keyword {
+     color: rgb(0, 0, 255);
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: rgb(3, 106, 7);
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+</head>
+
+<body>
+<h1>Code Book</h1>
+
+<p>This code book summarizes the resulting data fields in tidy.txt.</p>
+
+<h1>Raw Data Collection</h1>
+
+<p>Based on <a href="http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.names">UCI Machine Learning Repositories</a>, the data was collected during experiments carried out with a group of 30 volunteers within an age bracket of 19-48 years old. Each volunteer performed six activities ( WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING ) while wearing a smartphone (Samsung Galaxy S  II ) on the waist. Embedded accelerometer and gyroscope was used to capture the 3-axial (x,y,z) linear acceleration and 3-axial (x,y,z) angular velocity at a constant rate of 50 Hz. The experiments were video recorded in order to label the data manually. The dataset generated is randomized into two datasets with 70% of the volunteers selected for generating the training dataset and 30% selected for test datasets.</p>
+
+<p>The sensor signalsfrom accelerometer and gyroscope were pre-processed using noise filters application and then sampled in fixed-width sliding windows of 2.56 seconds and 50% overlap( 128 readings/window). </p>
+
+<h1>Dataset  Description</h1>
+
+<h2>Files Utilised In This Project</h2>
+
+<p>The dataset includes the following files:</p>
+
+<ul>
+<li><code>features_info.txt</code>:information about the variables used in the feature vector.</li>
+<li><code>features.txt</code>: list of all features.</li>
+<li><code>activity_labels.txt</code>: links the class labels with their activity name.</li>
+<li><code>train/X_train.txt</code>: Training set.</li>
+<li><code>train/y_train.txt</code>: Training labels.</li>
+<li><code>train/subject_train.txt</code>: Subjects in Training set.</li>
+<li><code>test/X_test.txt</code>: Test set.</li>
+<li><code>test/y_test.txt</code>: Test labels.</li>
+<li><code>test/subject_test.txt</code>: Subjects in Test set.</li>
+</ul>
+
+<h2>Features</h2>
+
+<p>Based on <strong>features_info.txt</strong> file in the dataset zip file, the measurements came from accelerometer and gyroscope: time domain signals ( <em>tAcc-XYZ</em> and <em>tGyro-XYZ</em> ), body and gravity acceleration signals ( <em>tBodyAcc-XYZ</em> and <em>tGravityAcc-XYZ</em> ), body linear acceleration and angular velocity derived in time to obtain Jerk signals ( <em>tBodyAccJerk-XYZ</em> and <em>tBodyGyroJerk-XYZ</em> ), Eucliden norm calculated magnitude of these three-dimensional signals ( <em>tBodyAccMag</em>, <em>tGravityAccMag</em>, <em>tBodyAccJerkMag</em>, <em>tBodyGyroMag</em>, <em>tBodyGyroJerkMag</em> ) and Fast Fourier Transform (FFT) application on the signals ( <em>fBodyAcc-XYZ</em>, <em>fBodyAccJerk-XYZ</em>, <em>fBodyGyro-XYZ</em>, <em>fBodyAccJerkMag</em>, <em>fBodyGyroMag</em>, <em>fBodyGyroJerkMag</em> ). Prefix &#39;t&#39; denotes time and &#39;f&#39; denotes frequency domain signals. </p>
+
+<p>The following signals were used to estimate variables of the feature vector for each pattern with &#39;-XYZ&#39; denoting the 3-axial signals in the X, Y and Z directions:</p>
+
+<ul>
+<li><code>tBodyAcc-XYZ</code></li>
+<li><code>tGravityAcc-XYZ</code></li>
+<li><code>tBodyAccJerk-XYZ</code></li>
+<li><code>tBodyGyro-XYZ</code></li>
+<li><code>tBodyGyroJerk-XYZ</code></li>
+<li><code>tBodyAccMag</code></li>
+<li><code>tGravityAccMag</code></li>
+<li><code>tBodyAccJerkMag</code></li>
+<li><code>tBodyGyroMag</code></li>
+<li><code>tBodyGyroJerkMag</code></li>
+<li><code>fBodyAcc-XYZ</code></li>
+<li><code>fBodyAccJerk-XYZ</code></li>
+<li><code>fBodyGyro-XYZ</code></li>
+<li><code>fBodyAccMag</code></li>
+<li><code>fBodyAccJerkMag</code></li>
+<li><code>fBodyGyroMag</code></li>
+<li><code>fBodyGyroJerkMag</code></li>
+</ul>
+
+<p>The set of variables that were estimated from these signals are: </p>
+
+<ul>
+<li><code>mean()</code>: Mean value</li>
+<li><code>std()</code>: Standard deviation</li>
+<li><code>mad()</code>: Median absolute deviation </li>
+<li><code>max()</code>: Largest value in array</li>
+<li><code>min()</code>: Smallest value in array</li>
+<li><code>sma()</code>: Signal magnitude area</li>
+<li><code>energy()</code>: Energy measure. Sum of the squares divided by the number of values. </li>
+<li><code>iqr()</code>: Interquartile range </li>
+<li><code>entropy()</code>: Signal entropy</li>
+<li><code>arCoeff()</code>: Autorregresion coefficients with Burg order equal to 4</li>
+<li><code>correlation()</code>: correlation coefficient between two signals</li>
+<li><code>maxInds()</code>: index of the frequency component with largest magnitude</li>
+<li><code>meanFreq()</code>: Weighted average of the frequency components to obtain a mean frequency</li>
+<li><code>skewness()</code>: skewness of the frequency domain signal </li>
+<li><code>kurtosis()</code>: kurtosis of the frequency domain signal </li>
+<li><code>bandsEnergy()</code>: Energy of a frequency interval within the 64 bins of the FFT of each window.</li>
+<li><code>angle()</code>: Angle between to vectors.</li>
+</ul>
+
+<p>Additional vectors obtained by averaging the signals in a signal window sample. These are used on the <code>angle()</code> variable:</p>
+
+<ul>
+<li><code>gravityMean</code></li>
+<li><code>tBodyAccMean</code></li>
+<li><code>tBodyAccJerkMean</code></li>
+<li><code>tBodyGyroMean</code></li>
+<li><code>tBodyGyroJerkMean</code></li>
+</ul>
+
+<h2>Activity</h2>
+
+<ul>
+<li><code>WALKING (value 1)</code>: subject was walking during the test</li>
+<li><code>WALKING_UPSTAIRS (value 2)</code>: subject was walking up a staircase during the test</li>
+<li><code>WALKING_DOWNSTAIRS (value 3)</code>: subject was walking down a staircase during the test</li>
+<li><code>SITTING (value 4)</code>: subject was sitting during the test</li>
+<li><code>STANDING (value 5)</code>: subject was standing during the test</li>
+<li><code>LAYING (value 6)</code>: subject was laying down during the test</li>
+</ul>
+
+<h1>Data Transformation</h1>
+
+<h2>PART I: Merges the training and the test sets to create one data set</h2>
+
+<h3>Install Packages</h3>
+
+<pre><code class="r">install.packages(&#39;data.table&#39;)
+</code></pre>
+
+<h3>Load Libraries</h3>
+
+<pre><code class="r">library(data.table)
+</code></pre>
+
+<h3>Download and Unzip Data</h3>
+
+<pre><code class="r">fileUrl &lt;- &quot;https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip&quot;
+download.file(fileUrl, destfile = &quot;dataset.zip&quot;)
+unzip(&quot;dataset.zip&quot;)
+</code></pre>
+
+<h3>Reading Features and Activities Labels</h3>
+
+<pre><code class="r">featureLabels &lt;- read.table(&quot;UCI HAR Dataset/features.txt&quot;)
+activityLabels &lt;- read.table(&quot;UCI HAR Dataset/activity_labels.txt&quot;, header = FALSE)
+</code></pre>
+
+<h3>Reading Training Data</h3>
+
+<pre><code class="r">trainingFeatures &lt;- read.table(&quot;UCI HAR Dataset/train/X_train.txt&quot;,header=FALSE)
+trainingActivity &lt;- read.table(&quot;UCI HAR Dataset/train/y_train.txt&quot;,header=FALSE)
+trainingSubject &lt;- read.table(&quot;UCI HAR Dataset/train/subject_train.txt&quot;,header=FALSE)
+</code></pre>
+
+<h3>Reading Test Data</h3>
+
+<pre><code class="r">testFeatures &lt;- read.table(&quot;UCI HAR Dataset/test/X_test.txt&quot;,header=FALSE)
+testActivity &lt;- read.table(&quot;UCI HAR Dataset/test/y_test.txt&quot;,header=FALSE)
+testSubject &lt;- read.table(&quot;UCI HAR Dataset/test/subject_test.txt&quot;,header=FALSE)
+</code></pre>
+
+<h3>Merge Training Set and Test Set</h3>
+
+<pre><code class="r">mergedFeatures &lt;- rbind( trainingFeatures, testFeatures )
+mergedSubjects &lt;- rbind(trainingSubject, testSubject )
+mergedActivities &lt;- rbind( trainingActivity, testActivity )
+</code></pre>
+
+<h3>Naming Columns Headers</h3>
+
+<pre><code class="r">colnames( mergedFeatures ) &lt;- featureLabels$V2
+colnames( mergedSubjects ) &lt;- &#39;Subject&#39;
+colnames( mergedActivities ) &lt;- &#39;Activity&#39;
+allData &lt;- cbind( mergedFeatures, mergedActivities, mergedSubjects )
+</code></pre>
+
+<pre><code class="r">str(allData)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    10299 obs. of  563 variables:
+##  $ tBodyAcc-mean()-X                   : num  0.289 0.278 0.28 0.279 0.277 ...
+##  $ tBodyAcc-mean()-Y                   : num  -0.0203 -0.0164 -0.0195 -0.0262 -0.0166 ...
+##  $ tBodyAcc-mean()-Z                   : num  -0.133 -0.124 -0.113 -0.123 -0.115 ...
+##  $ tBodyAcc-std()-X                    : num  -0.995 -0.998 -0.995 -0.996 -0.998 ...
+##  $ tBodyAcc-std()-Y                    : num  -0.983 -0.975 -0.967 -0.983 -0.981 ...
+##  $ tBodyAcc-std()-Z                    : num  -0.914 -0.96 -0.979 -0.991 -0.99 ...
+##  $ tBodyAcc-mad()-X                    : num  -0.995 -0.999 -0.997 -0.997 -0.998 ...
+##  $ tBodyAcc-mad()-Y                    : num  -0.983 -0.975 -0.964 -0.983 -0.98 ...
+##  $ tBodyAcc-mad()-Z                    : num  -0.924 -0.958 -0.977 -0.989 -0.99 ...
+##  $ tBodyAcc-max()-X                    : num  -0.935 -0.943 -0.939 -0.939 -0.942 ...
+##  $ tBodyAcc-max()-Y                    : num  -0.567 -0.558 -0.558 -0.576 -0.569 ...
+##  $ tBodyAcc-max()-Z                    : num  -0.744 -0.818 -0.818 -0.83 -0.825 ...
+##  $ tBodyAcc-min()-X                    : num  0.853 0.849 0.844 0.844 0.849 ...
+##  $ tBodyAcc-min()-Y                    : num  0.686 0.686 0.682 0.682 0.683 ...
+##  $ tBodyAcc-min()-Z                    : num  0.814 0.823 0.839 0.838 0.838 ...
+##  $ tBodyAcc-sma()                      : num  -0.966 -0.982 -0.983 -0.986 -0.993 ...
+##  $ tBodyAcc-energy()-X                 : num  -1 -1 -1 -1 -1 ...
+##  $ tBodyAcc-energy()-Y                 : num  -1 -1 -1 -1 -1 ...
+##  $ tBodyAcc-energy()-Z                 : num  -0.995 -0.998 -0.999 -1 -1 ...
+##  $ tBodyAcc-iqr()-X                    : num  -0.994 -0.999 -0.997 -0.997 -0.998 ...
+##  $ tBodyAcc-iqr()-Y                    : num  -0.988 -0.978 -0.965 -0.984 -0.981 ...
+##  $ tBodyAcc-iqr()-Z                    : num  -0.943 -0.948 -0.975 -0.986 -0.991 ...
+##  $ tBodyAcc-entropy()-X                : num  -0.408 -0.715 -0.592 -0.627 -0.787 ...
+##  $ tBodyAcc-entropy()-Y                : num  -0.679 -0.501 -0.486 -0.851 -0.559 ...
+##  $ tBodyAcc-entropy()-Z                : num  -0.602 -0.571 -0.571 -0.912 -0.761 ...
+##  $ tBodyAcc-arCoeff()-X,1              : num  0.9293 0.6116 0.273 0.0614 0.3133 ...
+##  $ tBodyAcc-arCoeff()-X,2              : num  -0.853 -0.3295 -0.0863 0.0748 -0.1312 ...
+##  $ tBodyAcc-arCoeff()-X,3              : num  0.36 0.284 0.337 0.198 0.191 ...
+##  $ tBodyAcc-arCoeff()-X,4              : num  -0.0585 0.2846 -0.1647 -0.2643 0.0869 ...
+##  $ tBodyAcc-arCoeff()-Y,1              : num  0.2569 0.1157 0.0172 0.0725 0.2576 ...
+##  $ tBodyAcc-arCoeff()-Y,2              : num  -0.2248 -0.091 -0.0745 -0.1553 -0.2725 ...
+##  $ tBodyAcc-arCoeff()-Y,3              : num  0.264 0.294 0.342 0.323 0.435 ...
+##  $ tBodyAcc-arCoeff()-Y,4              : num  -0.0952 -0.2812 -0.3326 -0.1708 -0.3154 ...
+##  $ tBodyAcc-arCoeff()-Z,1              : num  0.279 0.086 0.239 0.295 0.44 ...
+##  $ tBodyAcc-arCoeff()-Z,2              : num  -0.4651 -0.0222 -0.1362 -0.3061 -0.2691 ...
+##  $ tBodyAcc-arCoeff()-Z,3              : num  0.4919 -0.0167 0.1739 0.4821 0.1794 ...
+##  $ tBodyAcc-arCoeff()-Z,4              : num  -0.191 -0.221 -0.299 -0.47 -0.089 ...
+##  $ tBodyAcc-correlation()-X,Y          : num  0.3763 -0.0134 -0.1247 -0.3057 -0.1558 ...
+##  $ tBodyAcc-correlation()-X,Z          : num  0.4351 -0.0727 -0.1811 -0.3627 -0.1898 ...
+##  $ tBodyAcc-correlation()-Y,Z          : num  0.661 0.579 0.609 0.507 0.599 ...
+##  $ tGravityAcc-mean()-X                : num  0.963 0.967 0.967 0.968 0.968 ...
+##  $ tGravityAcc-mean()-Y                : num  -0.141 -0.142 -0.142 -0.144 -0.149 ...
+##  $ tGravityAcc-mean()-Z                : num  0.1154 0.1094 0.1019 0.0999 0.0945 ...
+##  $ tGravityAcc-std()-X                 : num  -0.985 -0.997 -1 -0.997 -0.998 ...
+##  $ tGravityAcc-std()-Y                 : num  -0.982 -0.989 -0.993 -0.981 -0.988 ...
+##  $ tGravityAcc-std()-Z                 : num  -0.878 -0.932 -0.993 -0.978 -0.979 ...
+##  $ tGravityAcc-mad()-X                 : num  -0.985 -0.998 -1 -0.996 -0.998 ...
+##  $ tGravityAcc-mad()-Y                 : num  -0.984 -0.99 -0.993 -0.981 -0.989 ...
+##  $ tGravityAcc-mad()-Z                 : num  -0.895 -0.933 -0.993 -0.978 -0.979 ...
+##  $ tGravityAcc-max()-X                 : num  0.892 0.892 0.892 0.894 0.894 ...
+##  $ tGravityAcc-max()-Y                 : num  -0.161 -0.161 -0.164 -0.164 -0.167 ...
+##  $ tGravityAcc-max()-Z                 : num  0.1247 0.1226 0.0946 0.0934 0.0917 ...
+##  $ tGravityAcc-min()-X                 : num  0.977 0.985 0.987 0.987 0.987 ...
+##  $ tGravityAcc-min()-Y                 : num  -0.123 -0.115 -0.115 -0.121 -0.122 ...
+##  $ tGravityAcc-min()-Z                 : num  0.0565 0.1028 0.1028 0.0958 0.0941 ...
+##  $ tGravityAcc-sma()                   : num  -0.375 -0.383 -0.402 -0.4 -0.4 ...
+##  $ tGravityAcc-energy()-X              : num  0.899 0.908 0.909 0.911 0.912 ...
+##  $ tGravityAcc-energy()-Y              : num  -0.971 -0.971 -0.97 -0.969 -0.967 ...
+##  $ tGravityAcc-energy()-Z              : num  -0.976 -0.979 -0.982 -0.982 -0.984 ...
+##  $ tGravityAcc-iqr()-X                 : num  -0.984 -0.999 -1 -0.996 -0.998 ...
+##  $ tGravityAcc-iqr()-Y                 : num  -0.989 -0.99 -0.992 -0.981 -0.991 ...
+##  $ tGravityAcc-iqr()-Z                 : num  -0.918 -0.942 -0.993 -0.98 -0.98 ...
+##  $ tGravityAcc-entropy()-X             : num  -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
+##  $ tGravityAcc-entropy()-Y             : num  -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 ...
+##  $ tGravityAcc-entropy()-Z             : num  0.114 -0.21 -0.927 -0.596 -0.617 ...
+##  $ tGravityAcc-arCoeff()-X,1           : num  -0.59042 -0.41006 0.00223 -0.06493 -0.25727 ...
+##  $ tGravityAcc-arCoeff()-X,2           : num  0.5911 0.4139 0.0275 0.0754 0.2689 ...
+##  $ tGravityAcc-arCoeff()-X,3           : num  -0.5918 -0.4176 -0.0567 -0.0858 -0.2807 ...
+##  $ tGravityAcc-arCoeff()-X,4           : num  0.5925 0.4213 0.0855 0.0962 0.2926 ...
+##  $ tGravityAcc-arCoeff()-Y,1           : num  -0.745 -0.196 -0.329 -0.295 -0.167 ...
+##  $ tGravityAcc-arCoeff()-Y,2           : num  0.7209 0.1253 0.2705 0.2283 0.0899 ...
+##  $ tGravityAcc-arCoeff()-Y,3           : num  -0.7124 -0.1056 -0.2545 -0.2063 -0.0663 ...
+##  $ tGravityAcc-arCoeff()-Y,4           : num  0.7113 0.1091 0.2576 0.2048 0.0671 ...
+##  $ tGravityAcc-arCoeff()-Z,1           : num  -0.995 -0.834 -0.705 -0.385 -0.237 ...
+##  $ tGravityAcc-arCoeff()-Z,2           : num  0.996 0.834 0.714 0.386 0.239 ...
+##  $ tGravityAcc-arCoeff()-Z,3           : num  -0.996 -0.834 -0.723 -0.387 -0.241 ...
+##  $ tGravityAcc-arCoeff()-Z,4           : num  0.992 0.83 0.729 0.385 0.241 ...
+##  $ tGravityAcc-correlation()-X,Y       : num  0.57 -0.831 -0.181 -0.991 -0.408 ...
+##  $ tGravityAcc-correlation()-X,Z       : num  0.439 -0.866 0.338 -0.969 -0.185 ...
+##  $ tGravityAcc-correlation()-Y,Z       : num  0.987 0.974 0.643 0.984 0.965 ...
+##  $ tBodyAccJerk-mean()-X               : num  0.078 0.074 0.0736 0.0773 0.0734 ...
+##  $ tBodyAccJerk-mean()-Y               : num  0.005 0.00577 0.0031 0.02006 0.01912 ...
+##  $ tBodyAccJerk-mean()-Z               : num  -0.06783 0.02938 -0.00905 -0.00986 0.01678 ...
+##  $ tBodyAccJerk-std()-X                : num  -0.994 -0.996 -0.991 -0.993 -0.996 ...
+##  $ tBodyAccJerk-std()-Y                : num  -0.988 -0.981 -0.981 -0.988 -0.988 ...
+##  $ tBodyAccJerk-std()-Z                : num  -0.994 -0.992 -0.99 -0.993 -0.992 ...
+##  $ tBodyAccJerk-mad()-X                : num  -0.994 -0.996 -0.991 -0.994 -0.997 ...
+##  $ tBodyAccJerk-mad()-Y                : num  -0.986 -0.979 -0.979 -0.986 -0.987 ...
+##  $ tBodyAccJerk-mad()-Z                : num  -0.993 -0.991 -0.987 -0.991 -0.991 ...
+##  $ tBodyAccJerk-max()-X                : num  -0.985 -0.995 -0.987 -0.987 -0.997 ...
+##  $ tBodyAccJerk-max()-Y                : num  -0.992 -0.979 -0.979 -0.992 -0.992 ...
+##  $ tBodyAccJerk-max()-Z                : num  -0.993 -0.992 -0.992 -0.99 -0.99 ...
+##  $ tBodyAccJerk-min()-X                : num  0.99 0.993 0.988 0.988 0.994 ...
+##  $ tBodyAccJerk-min()-Y                : num  0.992 0.992 0.992 0.993 0.993 ...
+##  $ tBodyAccJerk-min()-Z                : num  0.991 0.989 0.989 0.993 0.986 ...
+##  $ tBodyAccJerk-sma()                  : num  -0.994 -0.991 -0.988 -0.993 -0.994 ...
+##  $ tBodyAccJerk-energy()-X             : num  -1 -1 -1 -1 -1 ...
+##  $ tBodyAccJerk-energy()-Y             : num  -1 -1 -1 -1 -1 ...
+##  $ tBodyAccJerk-energy()-Z             : num  -1 -1 -1 -1 -1 ...
+##   [list output truncated]
+</code></pre>
+
+<h2>PART II: Extracts only the measurements on the mean and standard deviation for each measurement</h2>
+
+<h3>Extract fields containing mean() and std() (along with the columns: &#39;Subject&#39; and &#39;Activity&#39;)</h3>
+
+<pre><code class="r">extractedData &lt;- allData[,grepl(&quot;mean\\(\\)|std\\(\\)|Subject|Activity&quot;, names(allData))]
+</code></pre>
+
+<pre><code class="r">str(extractedData)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    10299 obs. of  68 variables:
+##  $ tBodyAcc-mean()-X          : num  0.289 0.278 0.28 0.279 0.277 ...
+##  $ tBodyAcc-mean()-Y          : num  -0.0203 -0.0164 -0.0195 -0.0262 -0.0166 ...
+##  $ tBodyAcc-mean()-Z          : num  -0.133 -0.124 -0.113 -0.123 -0.115 ...
+##  $ tBodyAcc-std()-X           : num  -0.995 -0.998 -0.995 -0.996 -0.998 ...
+##  $ tBodyAcc-std()-Y           : num  -0.983 -0.975 -0.967 -0.983 -0.981 ...
+##  $ tBodyAcc-std()-Z           : num  -0.914 -0.96 -0.979 -0.991 -0.99 ...
+##  $ tGravityAcc-mean()-X       : num  0.963 0.967 0.967 0.968 0.968 ...
+##  $ tGravityAcc-mean()-Y       : num  -0.141 -0.142 -0.142 -0.144 -0.149 ...
+##  $ tGravityAcc-mean()-Z       : num  0.1154 0.1094 0.1019 0.0999 0.0945 ...
+##  $ tGravityAcc-std()-X        : num  -0.985 -0.997 -1 -0.997 -0.998 ...
+##  $ tGravityAcc-std()-Y        : num  -0.982 -0.989 -0.993 -0.981 -0.988 ...
+##  $ tGravityAcc-std()-Z        : num  -0.878 -0.932 -0.993 -0.978 -0.979 ...
+##  $ tBodyAccJerk-mean()-X      : num  0.078 0.074 0.0736 0.0773 0.0734 ...
+##  $ tBodyAccJerk-mean()-Y      : num  0.005 0.00577 0.0031 0.02006 0.01912 ...
+##  $ tBodyAccJerk-mean()-Z      : num  -0.06783 0.02938 -0.00905 -0.00986 0.01678 ...
+##  $ tBodyAccJerk-std()-X       : num  -0.994 -0.996 -0.991 -0.993 -0.996 ...
+##  $ tBodyAccJerk-std()-Y       : num  -0.988 -0.981 -0.981 -0.988 -0.988 ...
+##  $ tBodyAccJerk-std()-Z       : num  -0.994 -0.992 -0.99 -0.993 -0.992 ...
+##  $ tBodyGyro-mean()-X         : num  -0.0061 -0.0161 -0.0317 -0.0434 -0.034 ...
+##  $ tBodyGyro-mean()-Y         : num  -0.0314 -0.0839 -0.1023 -0.0914 -0.0747 ...
+##  $ tBodyGyro-mean()-Z         : num  0.1077 0.1006 0.0961 0.0855 0.0774 ...
+##  $ tBodyGyro-std()-X          : num  -0.985 -0.983 -0.976 -0.991 -0.985 ...
+##  $ tBodyGyro-std()-Y          : num  -0.977 -0.989 -0.994 -0.992 -0.992 ...
+##  $ tBodyGyro-std()-Z          : num  -0.992 -0.989 -0.986 -0.988 -0.987 ...
+##  $ tBodyGyroJerk-mean()-X     : num  -0.0992 -0.1105 -0.1085 -0.0912 -0.0908 ...
+##  $ tBodyGyroJerk-mean()-Y     : num  -0.0555 -0.0448 -0.0424 -0.0363 -0.0376 ...
+##  $ tBodyGyroJerk-mean()-Z     : num  -0.062 -0.0592 -0.0558 -0.0605 -0.0583 ...
+##  $ tBodyGyroJerk-std()-X      : num  -0.992 -0.99 -0.988 -0.991 -0.991 ...
+##  $ tBodyGyroJerk-std()-Y      : num  -0.993 -0.997 -0.996 -0.997 -0.996 ...
+##  $ tBodyGyroJerk-std()-Z      : num  -0.992 -0.994 -0.992 -0.993 -0.995 ...
+##  $ tBodyAccMag-mean()         : num  -0.959 -0.979 -0.984 -0.987 -0.993 ...
+##  $ tBodyAccMag-std()          : num  -0.951 -0.976 -0.988 -0.986 -0.991 ...
+##  $ tGravityAccMag-mean()      : num  -0.959 -0.979 -0.984 -0.987 -0.993 ...
+##  $ tGravityAccMag-std()       : num  -0.951 -0.976 -0.988 -0.986 -0.991 ...
+##  $ tBodyAccJerkMag-mean()     : num  -0.993 -0.991 -0.989 -0.993 -0.993 ...
+##  $ tBodyAccJerkMag-std()      : num  -0.994 -0.992 -0.99 -0.993 -0.996 ...
+##  $ tBodyGyroMag-mean()        : num  -0.969 -0.981 -0.976 -0.982 -0.985 ...
+##  $ tBodyGyroMag-std()         : num  -0.964 -0.984 -0.986 -0.987 -0.989 ...
+##  $ tBodyGyroJerkMag-mean()    : num  -0.994 -0.995 -0.993 -0.996 -0.996 ...
+##  $ tBodyGyroJerkMag-std()     : num  -0.991 -0.996 -0.995 -0.995 -0.995 ...
+##  $ fBodyAcc-mean()-X          : num  -0.995 -0.997 -0.994 -0.995 -0.997 ...
+##  $ fBodyAcc-mean()-Y          : num  -0.983 -0.977 -0.973 -0.984 -0.982 ...
+##  $ fBodyAcc-mean()-Z          : num  -0.939 -0.974 -0.983 -0.991 -0.988 ...
+##  $ fBodyAcc-std()-X           : num  -0.995 -0.999 -0.996 -0.996 -0.999 ...
+##  $ fBodyAcc-std()-Y           : num  -0.983 -0.975 -0.966 -0.983 -0.98 ...
+##  $ fBodyAcc-std()-Z           : num  -0.906 -0.955 -0.977 -0.99 -0.992 ...
+##  $ fBodyAccJerk-mean()-X      : num  -0.992 -0.995 -0.991 -0.994 -0.996 ...
+##  $ fBodyAccJerk-mean()-Y      : num  -0.987 -0.981 -0.982 -0.989 -0.989 ...
+##  $ fBodyAccJerk-mean()-Z      : num  -0.99 -0.99 -0.988 -0.991 -0.991 ...
+##  $ fBodyAccJerk-std()-X       : num  -0.996 -0.997 -0.991 -0.991 -0.997 ...
+##  $ fBodyAccJerk-std()-Y       : num  -0.991 -0.982 -0.981 -0.987 -0.989 ...
+##  $ fBodyAccJerk-std()-Z       : num  -0.997 -0.993 -0.99 -0.994 -0.993 ...
+##  $ fBodyGyro-mean()-X         : num  -0.987 -0.977 -0.975 -0.987 -0.982 ...
+##  $ fBodyGyro-mean()-Y         : num  -0.982 -0.993 -0.994 -0.994 -0.993 ...
+##  $ fBodyGyro-mean()-Z         : num  -0.99 -0.99 -0.987 -0.987 -0.989 ...
+##  $ fBodyGyro-std()-X          : num  -0.985 -0.985 -0.977 -0.993 -0.986 ...
+##  $ fBodyGyro-std()-Y          : num  -0.974 -0.987 -0.993 -0.992 -0.992 ...
+##  $ fBodyGyro-std()-Z          : num  -0.994 -0.99 -0.987 -0.989 -0.988 ...
+##  $ fBodyAccMag-mean()         : num  -0.952 -0.981 -0.988 -0.988 -0.994 ...
+##  $ fBodyAccMag-std()          : num  -0.956 -0.976 -0.989 -0.987 -0.99 ...
+##  $ fBodyBodyAccJerkMag-mean() : num  -0.994 -0.99 -0.989 -0.993 -0.996 ...
+##  $ fBodyBodyAccJerkMag-std()  : num  -0.994 -0.992 -0.991 -0.992 -0.994 ...
+##  $ fBodyBodyGyroMag-mean()    : num  -0.98 -0.988 -0.989 -0.989 -0.991 ...
+##  $ fBodyBodyGyroMag-std()     : num  -0.961 -0.983 -0.986 -0.988 -0.989 ...
+##  $ fBodyBodyGyroJerkMag-mean(): num  -0.992 -0.996 -0.995 -0.995 -0.995 ...
+##  $ fBodyBodyGyroJerkMag-std() : num  -0.991 -0.996 -0.995 -0.995 -0.995 ...
+##  $ Activity                   : int  5 5 5 5 5 5 5 5 5 5 ...
+##  $ Subject                    : int  1 1 1 1 1 1 1 1 1 1 ...
+</code></pre>
+
+<h2>PART III: Uses descriptive activity names to name the activities in the data set</h2>
+
+<pre><code class="r">extractedData$Activity &lt;- factor(extractedData$Activity,levels=activityLabels$V1,labels=activityLabels$V2)
+</code></pre>
+
+<pre><code class="r">table(extractedData$Activity)
+</code></pre>
+
+<p>Before:</p>
+
+<pre><code>## 
+##    1    2    3    4    5    6 
+## 1722 1544 1406 1777 1906 1944
+</code></pre>
+
+<p>After:</p>
+
+<pre><code>## 
+##            WALKING   WALKING_UPSTAIRS WALKING_DOWNSTAIRS 
+##               1722               1544               1406 
+##            SITTING           STANDING             LAYING 
+##               1777               1906               1944
+</code></pre>
+
+<h2>PART IV: Appropriately labels the data set with descriptive names</h2>
+
+<p>Labelling features using descriptive names:</p>
+
+<ul>
+<li>prefix t = &#39;time&#39;</li>
+<li>prefix f = &#39;frequency&#39;</li>
+<li>prefix Acc = &#39;Accelerometer&#39;</li>
+<li>prefix Gyro = &#39;Gyroscope&#39;</li>
+<li>prefix Mag = &#39;Magnitude&#39;</li>
+<li>prefix BodyBody = &#39;Body&#39;</li>
+<li>prefix std() = &#39;StdDev&#39;</li>
+<li>prefix mean() = &#39;Mean&#39;</li>
+</ul>
+
+<pre><code class="r">names(extractedData)&lt;-gsub(&quot;^t&quot;, &quot;time&quot;, names(extractedData))
+names(extractedData)&lt;-gsub(&quot;^f&quot;, &quot;frequency&quot;, names(extractedData))
+names(extractedData)&lt;-gsub(&quot;Acc&quot;, &quot;Accelerometer&quot;, names(extractedData))
+names(extractedData)&lt;-gsub(&quot;Gyro&quot;, &quot;Gyroscope&quot;, names(extractedData))
+names(extractedData)&lt;-gsub(&quot;Mag&quot;, &quot;Magnitude&quot;, names(extractedData))
+names(extractedData)&lt;-gsub(&quot;BodyBody&quot;, &quot;Body&quot;, names(extractedData))
+names(extractedData)&lt;-gsub(&quot;std\\(\\)&quot;, &quot;StdDev&quot;, names(extractedData))
+names(extractedData)&lt;-gsub(&quot;mean\\(\\)&quot;, &quot;Mean&quot;, names(extractedData))
+</code></pre>
+
+<table><thead>
+<tr>
+<th align="left">Before</th>
+<th align="left">After</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="left">tBodyAcc-mean()-X</td>
+<td align="left">timeBodyAccelerometer-Mean-X</td>
+</tr>
+<tr>
+<td align="left">tBodyAcc-mean()-Y</td>
+<td align="left">timeBodyAccelerometer-Mean-Y</td>
+</tr>
+<tr>
+<td align="left">tBodyAcc-mean()-Z</td>
+<td align="left">timeBodyAccelerometer-Mean-Z</td>
+</tr>
+<tr>
+<td align="left">tBodyAcc-std()-X</td>
+<td align="left">timeBodyAccelerometer-StdDev-X</td>
+</tr>
+<tr>
+<td align="left">tBodyAcc-std()-Y</td>
+<td align="left">timeBodyAccelerometer-StdDev-Y</td>
+</tr>
+<tr>
+<td align="left">tBodyAcc-std()-Z</td>
+<td align="left">timeBodyAccelerometer-StdDev-Z</td>
+</tr>
+<tr>
+<td align="left">tGravityAcc-mean()-X</td>
+<td align="left">timeGravityAccelerometer-Mean-X</td>
+</tr>
+<tr>
+<td align="left">tGravityAcc-mean()-Y</td>
+<td align="left">timeGravityAccelerometer-Mean-Y</td>
+</tr>
+<tr>
+<td align="left">tGravityAcc-mean()-Z</td>
+<td align="left">timeGravityAccelerometer-Mean-Z</td>
+</tr>
+<tr>
+<td align="left">tGravityAcc-std()-X</td>
+<td align="left">timeGravityAccelerometer-StdDev-X</td>
+</tr>
+<tr>
+<td align="left">tGravityAcc-std()-Y</td>
+<td align="left">timeGravityAccelerometer-StdDev-Y</td>
+</tr>
+<tr>
+<td align="left">tGravityAcc-std()-Z</td>
+<td align="left">timeGravityAccelerometer-StdDev-Z</td>
+</tr>
+<tr>
+<td align="left">tBodyAccJerk-mean()-X</td>
+<td align="left">timeBodyAccelerometerJerk-Mean-X</td>
+</tr>
+<tr>
+<td align="left">tBodyAccJerk-mean()-Y</td>
+<td align="left">timeBodyAccelerometerJerk-Mean-Y</td>
+</tr>
+<tr>
+<td align="left">tBodyAccJerk-mean()-Z</td>
+<td align="left">timeBodyAccelerometerJerk-Mean-Z</td>
+</tr>
+<tr>
+<td align="left">tBodyAccJerk-std()-X</td>
+<td align="left">timeBodyAccelerometerJerk-StdDev-X</td>
+</tr>
+<tr>
+<td align="left">tBodyAccJerk-std()-Y</td>
+<td align="left">timeBodyAccelerometerJerk-StdDev-Y</td>
+</tr>
+<tr>
+<td align="left">tBodyAccJerk-std()-Z</td>
+<td align="left">timeBodyAccelerometerJerk-StdDev-Z</td>
+</tr>
+<tr>
+<td align="left">tBodyGyro-mean()-X</td>
+<td align="left">timeBodyGyroscope-Mean-X</td>
+</tr>
+<tr>
+<td align="left">tBodyGyro-mean()-Y</td>
+<td align="left">timeBodyGyroscope-Mean-Y</td>
+</tr>
+<tr>
+<td align="left">tBodyGyro-mean()-Z</td>
+<td align="left">timeBodyGyroscope-Mean-Z</td>
+</tr>
+<tr>
+<td align="left">tBodyGyro-std()-X</td>
+<td align="left">timeBodyGyroscope-StdDev-X</td>
+</tr>
+<tr>
+<td align="left">tBodyGyro-std()-Y</td>
+<td align="left">timeBodyGyroscope-StdDev-Y</td>
+</tr>
+<tr>
+<td align="left">tBodyGyro-std()-Z</td>
+<td align="left">timeBodyGyroscope-StdDev-Z</td>
+</tr>
+<tr>
+<td align="left">tBodyGyroJerk-mean()-X</td>
+<td align="left">timeBodyGyroscopeJerk-Mean-X</td>
+</tr>
+<tr>
+<td align="left">tBodyGyroJerk-mean()-Y</td>
+<td align="left">timeBodyGyroscopeJerk-Mean-Y</td>
+</tr>
+<tr>
+<td align="left">tBodyGyroJerk-mean()-Z</td>
+<td align="left">timeBodyGyroscopeJerk-Mean-Z</td>
+</tr>
+<tr>
+<td align="left">tBodyGyroJerk-std()-X</td>
+<td align="left">timeBodyGyroscopeJerk-StdDev-X</td>
+</tr>
+<tr>
+<td align="left">tBodyGyroJerk-std()-Y</td>
+<td align="left">timeBodyGyroscopeJerk-StdDev-Y</td>
+</tr>
+<tr>
+<td align="left">tBodyGyroJerk-std()-Z</td>
+<td align="left">timeBodyGyroscopeJerk-StdDev-Z</td>
+</tr>
+<tr>
+<td align="left">tBodyAccMag-mean()</td>
+<td align="left">timeBodyAccelerometerMagnitude-Mean</td>
+</tr>
+<tr>
+<td align="left">tBodyAccMag-std()</td>
+<td align="left">timeBodyAccelerometerMagnitude-StdDev</td>
+</tr>
+<tr>
+<td align="left">tGravityAccMag-mean()</td>
+<td align="left">timeGravityAccelerometerMagnitude-Mean</td>
+</tr>
+<tr>
+<td align="left">tGravityAccMag-std()</td>
+<td align="left">timeGravityAccelerometerMagnitude-StdDev</td>
+</tr>
+<tr>
+<td align="left">tBodyAccJerkMag-mean()</td>
+<td align="left">timeBodyAccelerometerJerkMagnitude-Mean</td>
+</tr>
+<tr>
+<td align="left">tBodyAccJerkMag-std()</td>
+<td align="left">timeBodyAccelerometerJerkMagnitude-StdDev</td>
+</tr>
+<tr>
+<td align="left">tBodyGyroMag-mean()</td>
+<td align="left">timeBodyGyroscopeMagnitude-Mean</td>
+</tr>
+<tr>
+<td align="left">tBodyGyroMag-std()</td>
+<td align="left">timeBodyGyroscopeMagnitude-StdDev</td>
+</tr>
+<tr>
+<td align="left">tBodyGyroJerkMag-mean()</td>
+<td align="left">timeBodyGyroscopeJerkMagnitude-Mean</td>
+</tr>
+<tr>
+<td align="left">tBodyGyroJerkMag-std()</td>
+<td align="left">timeBodyGyroscopeJerkMagnitude-StdDev</td>
+</tr>
+<tr>
+<td align="left">fBodyAcc-mean()-X</td>
+<td align="left">frequencyBodyAccelerometer-Mean-X</td>
+</tr>
+<tr>
+<td align="left">fBodyAcc-mean()-Y</td>
+<td align="left">frequencyBodyAccelerometer-Mean-Y</td>
+</tr>
+<tr>
+<td align="left">fBodyAcc-mean()-Z</td>
+<td align="left">frequencyBodyAccelerometer-Mean-Z</td>
+</tr>
+<tr>
+<td align="left">fBodyAcc-std()-X</td>
+<td align="left">frequencyBodyAccelerometer-StdDev-X</td>
+</tr>
+<tr>
+<td align="left">fBodyAcc-std()-Y</td>
+<td align="left">frequencyBodyAccelerometer-StdDev-Y</td>
+</tr>
+<tr>
+<td align="left">fBodyAcc-std()-Z</td>
+<td align="left">frequencyBodyAccelerometer-StdDev-Z</td>
+</tr>
+<tr>
+<td align="left">fBodyAccJerk-mean()-X</td>
+<td align="left">frequencyBodyAccelerometerJerk-Mean-X</td>
+</tr>
+<tr>
+<td align="left">fBodyAccJerk-mean()-Y</td>
+<td align="left">frequencyBodyAccelerometerJerk-Mean-Y</td>
+</tr>
+<tr>
+<td align="left">fBodyAccJerk-mean()-Z</td>
+<td align="left">frequencyBodyAccelerometerJerk-Mean-Z</td>
+</tr>
+<tr>
+<td align="left">fBodyAccJerk-std()-X</td>
+<td align="left">frequencyBodyAccelerometerJerk-StdDev-X</td>
+</tr>
+<tr>
+<td align="left">fBodyAccJerk-std()-Y</td>
+<td align="left">frequencyBodyAccelerometerJerk-StdDev-Y</td>
+</tr>
+<tr>
+<td align="left">fBodyAccJerk-std()-Z</td>
+<td align="left">frequencyBodyAccelerometerJerk-StdDev-Z</td>
+</tr>
+<tr>
+<td align="left">fBodyGyro-mean()-X</td>
+<td align="left">frequencyBodyGyroscope-Mean-X</td>
+</tr>
+<tr>
+<td align="left">fBodyGyro-mean()-Y</td>
+<td align="left">frequencyBodyGyroscope-Mean-Y</td>
+</tr>
+<tr>
+<td align="left">fBodyGyro-mean()-Z</td>
+<td align="left">frequencyBodyGyroscope-Mean-Z</td>
+</tr>
+<tr>
+<td align="left">fBodyGyro-std()-X</td>
+<td align="left">frequencyBodyGyroscope-StdDev-X</td>
+</tr>
+<tr>
+<td align="left">fBodyGyro-std()-Y</td>
+<td align="left">frequencyBodyGyroscope-StdDev-Y</td>
+</tr>
+<tr>
+<td align="left">fBodyGyro-std()-Z</td>
+<td align="left">frequencyBodyGyroscope-StdDev-Z</td>
+</tr>
+<tr>
+<td align="left">fBodyAccMag-mean()</td>
+<td align="left">frequencyBodyAccelerometerMagnitude-Mean</td>
+</tr>
+<tr>
+<td align="left">fBodyAccMag-std()</td>
+<td align="left">frequencyBodyAccelerometerMagnitude-StdDev</td>
+</tr>
+<tr>
+<td align="left">fBodyBodyAccJerkMag-mean()</td>
+<td align="left">frequencyBodyAccelerometerJerkMagnitude-Mean</td>
+</tr>
+<tr>
+<td align="left">fBodyBodyAccJerkMag-std()</td>
+<td align="left">frequencyBodyAccelerometerJerkMagnitude-StdDev</td>
+</tr>
+<tr>
+<td align="left">fBodyBodyGyroMag-mean()</td>
+<td align="left">frequencyBodyGyroscopeMagnitude-Mean</td>
+</tr>
+<tr>
+<td align="left">fBodyBodyGyroMag-std()</td>
+<td align="left">frequencyBodyGyroscopeMagnitude-StdDev</td>
+</tr>
+<tr>
+<td align="left">fBodyBodyGyroJerkMag-mean()</td>
+<td align="left">frequencyBodyGyroscopeJerkMagnitude-Mean</td>
+</tr>
+<tr>
+<td align="left">fBodyBodyGyroJerkMag-std()</td>
+<td align="left">frequencyBodyGyroscopeJerkMagnitude-StdDev</td>
+</tr>
+<tr>
+<td align="left">Activity</td>
+<td align="left">Activity</td>
+</tr>
+<tr>
+<td align="left">Subject</td>
+<td align="left">Subject</td>
+</tr>
+</tbody></table>
+
+<h2>PART V: Creates a second, independent tidy data set with the average of each variable for each activity and each subject</h2>
+
+<pre><code class="r">finalData &lt;- aggregate(. ~Subject + Activity, extractedData, mean)
+finalData &lt;- finalData[order(finalData$Subject,finalData$Activity),]
+write.table(finalData, file = &quot;tidydata.txt&quot;,row.name=FALSE)
+</code></pre>
+
+<pre><code class="r">dim(finalData)
+</code></pre>
+
+<pre><code>## [1] 180  68
+</code></pre>
+
+</body>
+
+</html>
+
