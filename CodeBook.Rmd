@@ -1,7 +1,7 @@
 Code Book
 ========================================================
  
-This code book summarizes the resulting data fields in tidy.txt.
+This code book summarizes the resulting data fields in tidydata.txt.
 
 # Raw Data Collection
 Based on [UCI Machine Learning Repositories](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.names), the data was collected during experiments carried out with a group of 30 volunteers within an age bracket of 19-48 years old. Each volunteer performed six activities ( WALKING, WALKING\_UPSTAIRS, WALKING\_DOWNSTAIRS, SITTING, STANDING, LAYING ) while wearing a smartphone (Samsung Galaxy S  II ) on the waist. Embedded accelerometer and gyroscope was used to capture the 3-axial (x,y,z) linear acceleration and 3-axial (x,y,z) angular velocity at a constant rate of 50 Hz. The experiments were video recorded in order to label the data manually. The dataset generated is randomized into two datasets with 70% of the volunteers selected for generating the training dataset and 30% selected for test datasets.
