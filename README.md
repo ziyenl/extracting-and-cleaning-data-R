@@ -16,7 +16,7 @@ The original data is sourced from [UCI Machine Learning Repository](http://archi
 * __run\_analysis.R__: R script to transform the raw dataset into a tidy dataset
 
 ## Steps to produce the tidy dataset
-1. git clone or download this repository [https://github.com/ziyenl/getting-and-cleaning-data-course-project.git](https://github.com/ziyenl/getting-and-cleaning-data-course-project.git)
+1. git clone or download this repository [https://github.com/ziyenl/getting-and-cleaning-data.git](https://github.com/ziyenl/getting-and-cleaning-data.git)
 4. open a R console and set the working directory to the repository root directory containing the __run\_analysis.R__ source file. This can be done using the command `setwd()`.
 5. read and run the sourcecode run_analysis.R script by using the command `source('run_analysis.R')`
 
