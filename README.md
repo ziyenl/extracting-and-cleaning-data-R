@@ -2,7 +2,7 @@ Getting and Cleaning Data Course Project
 ========================================
 
 ## Project Description
-This project is the final project for the 'Getting and Cleaning Data' Coursera course of the Data Science specialization. The purpose of the project is to demonstrate the ability to collect, work with, and clean a dataset based on lessons throughout the course. The final goal of the course is to prepare a tidy dataset that can be used for later analysis.
+The purpose of the project is to demonstrate the ability to collect, work with, and clean a dataset based on lessons throughout the course. The final goal of the course is to prepare a tidy dataset that can be used for later analysis.
 
 
 ## Project Data Source
